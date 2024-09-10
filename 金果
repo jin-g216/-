@@ -1,0 +1,108 @@
+#include <stdio.h>  
+
+void insertionSort(int arr[], int n) {
+    int i, key, j;
+    for (i = 1; i < n; i++) {
+        key = arr[i]; // 当前需要排序的元素  
+        j = i - 1;
+
+        // 将大于key的元素向后移动一位  
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = key; // 插入key到正确的位置  
+    }
+}
+
+// 辅助函数，用于打印数组  
+void printArray(int arr[], int size) {
+    int i;
+    for (i = 0; i < size; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
+
+// 测试插入排序  
+int main()
+{
+    int arr[] = { 12,32,43,54,21,9,0,78,8,1,2 };
+    int n = sizeof(arr) / sizeof(arr[0]);
+    insertionSort(arr, n);
+    printf("Sorted array: \n");
+    printArray(arr, n);
+    return 0;
+}
+
+//输出
+Sorted array:   
+0 1 2 8 9 12 21 32 43 54 78
+//列表
+耗时0.717s
+#include <stdio.h>  
+#include <stdlib.h>  
+  
+// 定义列表的结构体  
+typedef struct {  
+    int *elements; // 指向整数的指针，用于存储列表元素  
+    int size;       // 列表当前的大小  
+    int capacity;   // 列表的容量（即分配的内存大小）  
+} IntList;  
+  
+// 初始化列表  
+void initList(IntList *list, int initialCapacity) {  
+    list->elements = (int *)malloc(initialCapacity * sizeof(int));  
+    if (list->elements == NULL) {  
+        // 处理内存分配失败的情况  
+        exit(EXIT_FAILURE);  
+    }  
+    list->size = 0;  
+    list->capacity = initialCapacity;  
+}  
+  
+// 在列表末尾添加元素  
+void addToList(IntList *list, int element) {  
+    if (list->size >= list->capacity) {  
+        // 如果列表已满，则扩容  
+        int newCapacity = list->capacity * 2; // 这里简单地以2倍扩容，实际应用中可能需要更复杂的策略  
+        int *newElements = (int *)realloc(list->elements, newCapacity * sizeof(int));  
+        if (newElements == NULL) {  
+            // 处理内存分配失败的情况  
+            exit(EXIT_FAILURE);  
+        }  
+        list->elements = newElements;  
+        list->capacity = newCapacity;  
+    }  
+    list->elements[list->size++] = element; // 添加新元素并更新大小  
+}  
+  
+// 打印列表  
+void printList(IntList *list) {  
+    for (int i = 0; i < list->size; i++) {  
+        printf("%d ", list->elements[i]);  
+    }  
+    printf("\n");  
+}  
+  
+// 释放列表占用的内存  
+void freeList(IntList *list) {  
+    free(list->elements);  
+    list->elements = NULL;  
+    list->size = 0;  
+    list->capacity = 0;  
+}  
+  
+int main() {  
+    IntList myList;  
+    initList(&myList, 10); // 初始化一个容量为10的列表  
+  
+    addToList(&myList, 1);  
+    addToList(&myList, 2);  
+    addToList(&myList, 3);  
+  
+    printList(&myList); // 输出: 1 2 3  
+  
+    freeList(&myList); // 释放列表占用的内存  
+  
+    return 0;  
+}
