@@ -1,0 +1,89 @@
+#include <stdio.h>  
+#include <stdlib.h>  
+#include <time.h>  
+  
+// 交换两个整数的值  
+void swap(int *a, int *b) {  
+    int temp = *a;  
+    *a = *b;  
+    *b = temp;  
+}  
+  
+// 随机排序函数  
+void randomSort(int arr[], int n) {  
+    // 使用当前时间作为随机数生成器的种子  
+    srand(time(0));  
+  
+    // 使用Fisher-Yates洗牌算法进行随机排序  
+    for (int i = n - 1; i > 0; i--) {  
+        // 生成一个0到i之间的随机索引  
+        int j = rand() % (i + 1);  
+        // 交换arr[i]和arr[j]  
+        swap(&arr[i], &arr[j]);  
+    }  
+}  
+  
+// 打印数组函数  
+void printArray(int arr[], int size) {  
+    for (int i = 0; i < size; i++) {  
+        printf("%d ", arr[i]);  
+    }  
+    printf("\n");  
+}  
+  
+int main() {  
+    int arr[] = {64, 34, 25, 12, 22, 11, 90};  
+    int n = sizeof(arr) / sizeof(arr[0]);  
+  
+    printf("Unsorted array: \n");  
+    printArray(arr, n);  
+  
+    randomSort(arr, n);  
+  
+    printf("Randomly sorted array: \n");  
+    printArray(arr, n);  
+  
+    return 0;  
+}
+
+
+
+#include <stdio.h>  
+  
+// 冒泡排序函数  
+void bubbleSort(int arr[], int n) {  
+    int i, j, temp;  
+    for (i = 0; i < n-1; i++) {  
+        // 每一轮比较都会将最大的元素“冒泡”到数组的末尾  
+        for (j = 0; j < n-i-1; j++) {  
+            if (arr[j] > arr[j+1]) {  
+                // 交换元素  
+                temp = arr[j];  
+                arr[j] = arr[j+1];  
+                arr[j+1] = temp;  
+            }  
+        }  
+    }  
+}  
+  
+// 打印数组函数  
+void printArray(int arr[], int size) {  
+    int i;  
+    for (i = 0; i < size; i++) {  
+        printf("%d ", arr[i]);  
+    }  
+    printf("\n");  
+}  
+  
+int main() {  
+    int arr[] = {64, 34, 25, 12, 22, 11, 90};  
+    int n = sizeof(arr)/sizeof(arr[0]);  
+    printf("Unsorted array: \n");  
+    printArray(arr, n);  
+      
+    bubbleSort(arr, n);  
+      
+    printf("Sorted array: \n");  
+    printArray(arr, n);  
+    return 0;  
+}
